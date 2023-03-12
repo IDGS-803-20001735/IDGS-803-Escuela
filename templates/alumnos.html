@@ -1,0 +1,53 @@
+{% extends "layout.html" %}
+
+{% block content %}
+{%from "_macros.html" import render_field%}
+<div class="container">
+  <div class="cobrainer-btn">
+    <form method="POST">
+      <div class="input-group">
+        <input type="text" class="form-control" placeholder="INGRESE EL REGISTRO A BUSCAR" name="buscar">
+        <input type="hidden" name="csrf_token" value="{{csrf_token()}}" />
+        <button class="btn btn-success" type="submit">BUSCAR</button>
+        <button class="btn btn-dark" type="button"><a href="/insertAlumno">NUEVO</a></button>
+      </div>
+    </form>
+  </div>
+  <div class="row">
+    <table class="table table-secondary">
+      <thead>
+        <tr class="tr_head">
+          <th>#</th>
+          <th>Nombre</th>
+          <th>Apellidos</th>
+          <th>Grupo</th>
+          <th>Correo</th>
+          <th>Eliminar</th>
+          <th>Modificar</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for row in resulset %}
+        <tr>
+          <td>{{ row[0] }}</td>
+          <td>{{ row[1] }}</td>
+          <td>{{ row[2] }}</td>
+          <td>{{ row[3] }}</td>
+          <td>{{ row[4] }}</td>
+          <td><a
+              href="deleteAlumno?id={{ row[0] }}&nombre={{ row[1] }}&apellidos={{ row[2] }}&grupo={{ row[3] }}&email={{ row[4] }}"
+              class="btn btn-danger">
+              <i class="icon-remove icon-white"></i>ELIMINAR
+            </a></td>
+          <td><a
+              href="updateAlumno?id={{ row[0] }}&nombre={{ row[1] }}&apellidos={{ row[2] }}&grupo={{ row[3] }}&email={{ row[4] }}"
+              class="btn btn-warning">
+              <i class="icon-edit icon-white"></i>MODIFICAR
+            </a></td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}

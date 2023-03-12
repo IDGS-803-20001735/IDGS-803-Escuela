@@ -1,0 +1,61 @@
+html {
+  box-sizing: border-box;
+  font-size: 16px;
+}
+
+*,
+*::after,
+*::before {
+  box-sizing: inherit;
+}
+
+h1 {
+  padding: 10rem;
+  text-align: center;
+  font-weight: bold;
+}
+
+.container {
+  margin-top: 3rem;
+}
+
+.table {
+  text-align: center;
+}
+
+.cobrainer-btn {
+  margin-bottom: 1rem;
+}
+
+.btn {
+  font-weight: bold;
+}
+
+label {
+  margin-bottom: 0.5rem;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+h2 {
+  text-align: center;
+  margin-top: 1rem;
+  font-weight: bold;
+}
+
+.container-form {
+  margin-top: 3rem;
+  width: 25vw;
+
+  margin-left: auto;
+  margin-right: auto;
+}
+
+input[type="submit"] {
+  margin-top: 0.5rem;
+}
+
+a {
+  text-decoration: none;
+  color: white;
+}
