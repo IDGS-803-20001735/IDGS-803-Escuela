@@ -16,9 +16,9 @@ def get_alumnos():
             cursor.execute('call listar_alumno()')
             resulset = cursor.fetchall()
             return render_template('alumnos.html', form = alumno_form, resulset = resulset)
-    
     except Exception as ex:
-        print(ex)
+        flash("No se encontraron datos en la BD: " + str(ex))
+    return render_template('alumnos.html', form = alumno_form)
 
 @alumnos.route('/insertAlumno', methods = ['GET', 'POST'])
 def insert_alumno():
@@ -39,7 +39,6 @@ def insert_alumno():
         except Exception as ex:
             flash("No fue posible insertar el registro: " + str(ex))
         return redirect(url_for('alumnos.get_alumnos'))
-    
     return render_template('reg_alumnos.html', form = alumno_form)
 
 @alumnos.route('/updateAlumno', methods = ['GET', 'POST'])
@@ -51,7 +50,6 @@ def update_alumno():
         apellidos = request.args.get('apellidos')
         grupo = request.args.get('grupo')
         email = request.args.get('email')
-
         return render_template('update_alumnos.html', form = alumno_form, id = id, nombre = nombre, apellidos = apellidos, grupo = grupo, email = email)
 
     if request.method == 'POST':
@@ -71,7 +69,6 @@ def update_alumno():
         except Exception as ex:
             flash("No fue posible actualizar el registro: " + str(ex))
         return redirect(url_for('alumnos.get_alumnos'))
-    
     return render_template('update_alumnos.html', form = alumno_form)
 
 @alumnos.route('/deleteAlumno', methods = ['GET', 'POST'])
@@ -84,7 +81,6 @@ def delete_alumno():
         apellidos = request.args.get('apellidos')
         grupo = request.args.get('grupo')
         email = request.args.get('email')
-
         return render_template('delete_alumnos.html', form = alumno_form, id = id, nombre = nombre, apellidos = apellidos, grupo = grupo, email = email)
     
     if request.method == 'POST':
@@ -96,15 +92,13 @@ def delete_alumno():
                 cursor.execute('call eliminar_alumno(%s)', (id,))
                 connection.commit()
                 connection.close()
-
                 flash("Registro ELIMINADO satisfactoriamente")
         except Exception as ex:
             flash("No fue posible eliminar el registro: " + str(ex))
         return redirect(url_for('alumnos.get_alumnos'))
-    
     return render_template('delete_alumnos.html', form = alumno_form)
 
-@alumnos.route('/searchAlumno', methods = ['POST'])
+@alumnos.route('/searchAlumno', methods=['POST'])
 def search_alumno():
     alumno_form = forms.AlumnForm(request.form)
     buscar = request.form.get('buscar')
@@ -112,8 +106,11 @@ def search_alumno():
     try:
         connection = get_connection()
         with connection.cursor() as cursor:
-            cursor.execute('call buscar_alumno(%s)',(buscar,))
+            cursor.execute('call buscar_alumno(%s)', (buscar,))
             resulset = cursor.fetchall()
-            return render_template('alumnos.html', form = alumno_form, resulset = resulset)
+
+            if len(resulset) == 0:
+                flash("No se encontraron resultados para su búsqueda.")
     except Exception as ex:
         flash("No fue posible encotrar el registro: " + str(ex))
+    return render_template('alumnos.html', form = alumno_form, resulset = resulset)

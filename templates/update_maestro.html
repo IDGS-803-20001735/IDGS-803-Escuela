@@ -5,30 +5,35 @@
 
 <div class="container-form">
   <div class="row">
-    <form name="sent" action="/insertMaestro" id="form1" method="POST">
-      <h2 class="title-form">ALTA DE MAESTRO</h2>
+    <form name="sent" id="form1" method="POST">
+      <h2 class="title-form">MODIFICAR</h2>
       <div class="row control-group">
         <div class="form-group col-xs-12 float-label-form-group controls">
-          {{render_field(form.nombre,class='form-control')}}
+          {{render_field(form.id,class='form-control',value=id)}}
         </div>
       </div>
       <div class="row control-group">
         <div class="form-group col-xs-12 float-label-form-group controls">
-          {{render_field(form.apellidos,class='form-control')}}
+          {{render_field(form.nombre,class='form-control',value=nombre)}}
         </div>
       </div>
       <div class="row control-group">
         <div class="form-group col-xs-12 float-label-form-group controls">
-          {{render_field(form.materia,class='form-control')}}
+          {{render_field(form.apellidos,class='form-control',value=apellidos)}}
         </div>
       </div>
       <div class="row control-group">
         <div class="form-group col-xs-12 float-label-form-group controls">
-          {{render_field(form.email,class='form-control')}}
+          {{render_field(form.materia,class='form-control',value=materia)}}
+        </div>
+      </div>
+      <div class="row control-group">
+        <div class="form-group col-xs-12 float-label-form-group controls">
+          {{render_field(form.email,class='form-control',value=email)}}
         </div>
       </div>
       <input type="hidden" name="csrf_token" value="{{csrf_token()}}" />
-      <input type="submit" id="reg-maestro" name="registra" value="REGISTRAR" class="btn btn-primary" />
+      <input type="submit" id="modificar" class="btn btn-danger" name="modificar" value="MODIFICAR" />
       <a href="/getMaestro" class="btn btn-success" style="margin-top: .5rem;">
         CANCELAR
       </a>
