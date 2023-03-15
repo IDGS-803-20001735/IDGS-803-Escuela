@@ -4,11 +4,11 @@
 {%from "_macros.html" import render_field%}
 <div class="container">
   <div class="cobrainer-btn">
-    <form method="POST">
+    <form action="/searchMaestro" method="GET">
       <div class="input-group">
         <input type="text" class="form-control" placeholder="INGRESE EL REGISTRO A BUSCAR" name="buscar">
         <input type="hidden" name="csrf_token" value="{{csrf_token()}}" />
-        <button class="btn btn-success" type="submit">BUSCAR</button>
+        <button class="btn btn-success" type="button"><a href="/searchMaestro">BUSCAR</a></button>
         <button class="btn btn-dark" type="button"><a href="/insertMaestro">NUEVO</a></button>
       </div>
     </form>

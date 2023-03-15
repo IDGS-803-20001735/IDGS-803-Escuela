@@ -98,14 +98,14 @@ def delete_alumno():
         return redirect(url_for('alumnos.get_alumnos'))
     return render_template('delete_alumnos.html', form = alumno_form)
 
-@alumnos.route('/searchAlumno', methods=['POST'])
+@alumnos.route('/searchAlumno', methods = ['GET'])
 def search_alumno():
     alumno_form = forms.AlumnForm(request.form)
-    buscar = request.form.get('buscar')
+    buscar = request.args.get('buscar')
 
     try:
         connection = get_connection()
-        with connection.cursor() as cursor:
+        with connection.cursor () as cursor:
             cursor.execute('call buscar_alumno(%s)', (buscar,))
             resulset = cursor.fetchall()
 

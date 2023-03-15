@@ -96,3 +96,20 @@ def delete_maestro():
             flash("Error al ELIMINAR el registro: " + str(ex))
         return redirect(url_for('maestros.get_maestros'))
     return render_template('delete_maestro.html', form = maestro_form)
+
+@maestros.route('/searchMaestro', methods = ['GET'])
+def search_maestro():
+    maestro_form = forms.MaesForm(request.form)
+    buscar = request.args.get('buscar')
+
+    try:
+        connection = get_connection()
+        with connection.cursor () as cursor:
+            cursor.execute('call buscar_maestro(%s)', (buscar,))
+            resulset = cursor.fetchall()
+
+            if len(resulset) == 0:
+                flash("No se encontraron resultados para su búsqueda.")
+    except Exception as ex:
+        flash("No fue posible encotrar el registro: " + str(ex))
+    return render_template('maestros.html', form = maestro_form, resulset = resulset)
