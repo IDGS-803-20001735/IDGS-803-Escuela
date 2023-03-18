@@ -7,31 +7,33 @@
   <div class="row">
     <form name="sent" id="form1" method="POST">
       <h2 class="title-form">ELIMINAR</h2>
+      {% for row in resulset %}
       <div class="row control-group">
         <div class="form-group col-xs-12 float-label-form-group controls">
-          {{render_field(form.id,class='form-control',value=id)}}
+          {{render_field(form.id,class='form-control',value=row[0])}}
         </div>
       </div>
       <div class="row control-group">
         <div class="form-group col-xs-12 float-label-form-group controls">
-          {{render_field(form.nombre,class='form-control',value=nombre)}}
+          {{render_field(form.nombre,class='form-control',value=row[1])}}
         </div>
       </div>
       <div class="row control-group">
         <div class="form-group col-xs-12 float-label-form-group controls">
-          {{render_field(form.apellidos,class='form-control',value=apellidos)}}
+          {{render_field(form.apellidos,class='form-control',value=row[2])}}
         </div>
       </div>
       <div class="row control-group">
         <div class="form-group col-xs-12 float-label-form-group controls">
-          {{render_field(form.materia,class='form-control',value=materia)}}
+          {{render_field(form.materia,class='form-control',value=row[3])}}
         </div>
       </div>
       <div class="row control-group">
         <div class="form-group col-xs-12 float-label-form-group controls">
-          {{render_field(form.email,class='form-control',value=email)}}
+          {{render_field(form.email,class='form-control',value=row[4])}}
         </div>
       </div>
+      {% endfor %}
       <input type="hidden" name="csrf_token" value="{{csrf_token()}}" />
       <input type="submit" id="modificar" class="btn btn-danger" name="modificar" value="ELIMINAR" />
       <a href="/getMaestro" class="btn btn-success" style="margin-top: .5rem;">

@@ -34,14 +34,10 @@
           <td>{{ row[2] }}</td>
           <td>{{ row[3] }}</td>
           <td>{{ row[4] }}</td>
-          <td><a
-              href="deleteAlumno?id={{ row[0] }}&nombre={{ row[1] }}&apellidos={{ row[2] }}&grupo={{ row[3] }}&email={{ row[4] }}"
-              class="btn btn-danger">
+          <td><a href="deleteAlumno?id={{ row[0] }}" class="btn btn-danger">
               <i class="icon-remove icon-white"></i>ELIMINAR
             </a></td>
-          <td><a
-              href="updateAlumno?id={{ row[0] }}&nombre={{ row[1] }}&apellidos={{ row[2] }}&grupo={{ row[3] }}&email={{ row[4] }}"
-              class="btn btn-warning">
+          <td><a href="updateAlumno?id={{ row[0] }}" class="btn btn-warning">
               <i class="icon-edit icon-white"></i>MODIFICAR
             </a></td>
         </tr>

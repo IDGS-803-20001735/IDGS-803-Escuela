@@ -44,13 +44,17 @@ def insert_alumno():
 @alumnos.route('/updateAlumno', methods = ['GET', 'POST'])
 def update_alumno():
     alumno_form = forms.AlumnForm(request.form)
+    id = request.args.get('id')
     if request.method == 'GET':
-        id = request.args.get('id')
-        nombre = request.args.get('nombre')
-        apellidos = request.args.get('apellidos')
-        grupo = request.args.get('grupo')
-        email = request.args.get('email')
-        return render_template('update_alumnos.html', form = alumno_form, id = id, nombre = nombre, apellidos = apellidos, grupo = grupo, email = email)
+        try:
+            connection = get_connection()
+            with connection.cursor() as cursor:
+                cursor.execute('call one_alumno(%s)', (id,))
+                resulset = cursor.fetchall()
+            return render_template('update_alumnos.html', form = alumno_form, resulset = resulset)
+        except Exception as ex:
+            flash("No fue posible encontrar al alumno seleccionado! " + str(ex))
+        return render_template('update_alumnos.html', form = alumno_form)
 
     if request.method == 'POST':
         id = alumno_form.id.data
@@ -74,14 +78,17 @@ def update_alumno():
 @alumnos.route('/deleteAlumno', methods = ['GET', 'POST'])
 def delete_alumno():
     alumno_form = forms.AlumnForm(request.form)
-
+    id = request.args.get('id')
     if request.method == 'GET':
-        id = request.args.get('id')
-        nombre = request.args.get('nombre')
-        apellidos = request.args.get('apellidos')
-        grupo = request.args.get('grupo')
-        email = request.args.get('email')
-        return render_template('delete_alumnos.html', form = alumno_form, id = id, nombre = nombre, apellidos = apellidos, grupo = grupo, email = email)
+        try:
+            connection = get_connection()
+            with connection.cursor() as cursor:
+                cursor.execute('call one_alumno(%s)', (id,))
+                resulset = cursor.fetchall()
+            return render_template('delete_alumnos.html', form = alumno_form, resulset = resulset)
+        except Exception as ex:
+            flash("No fue posible encontrar al alumno seleccionado! " + str(ex))
+        return render_template('delete_alumnos.html', form = alumno_form)
     
     if request.method == 'POST':
         id = alumno_form.id.data

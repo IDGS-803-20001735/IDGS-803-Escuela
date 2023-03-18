@@ -45,13 +45,17 @@ def insert_maestro():
 @maestros.route('/updateMaestro', methods = ['GET', 'POST'])
 def update_maestro():
     maestro_form = forms.MaesForm(request.form)
+    id = request.args.get('id')
     if request.method == 'GET':
-        id = request.args.get('id')
-        nombre = request.args.get('nombre')
-        apellidos = request.args.get('apellidos')
-        materia = request.args.get('materia')
-        email = request.args.get('email')
-        return render_template('update_maestro.html',form = maestro_form, id = id, nombre = nombre, apellidos = apellidos, materia = materia, email = email)
+        try:
+            connection = get_connection()
+            with connection.cursor() as cursor:
+                cursor.execute('call one_maestro(%s)', (id,))
+                resulset = cursor.fetchall()
+            return render_template('update_maestro.html', form = maestro_form, resulset = resulset)
+        except Exception as ex:
+            flash("No fue posible encontrar al maestro seleccionado! " + str(ex))
+        return render_template('update_maestro.html', form = maestro_form)
     
     if request.method == 'POST':
         id = maestro_form.id.data
@@ -75,13 +79,17 @@ def update_maestro():
 @maestros.route('/deleteMaestro', methods = ['GET', 'POST'])
 def delete_maestro():
     maestro_form = forms.MaesForm(request.form)
+    id = request.args.get('id')
     if request.method == 'GET':
-        id = request.args.get('id')
-        nombre = request.args.get('nombre')
-        apellidos = request.args.get('apellidos')
-        materia = request.args.get('materia')
-        email = request.args.get('email')
-        return render_template('delete_maestro.html',form = maestro_form, id = id, nombre = nombre, apellidos = apellidos, materia = materia, email = email)
+        try:
+            connection = get_connection()
+            with connection.cursor() as cursor:
+                cursor.execute('call one_maestro(%s)', (id,))
+                resulset = cursor.fetchall()
+            return render_template('delete_maestro.html', form = maestro_form, resulset = resulset)
+        except Exception as ex:
+            flash("No fue posible encontrar al maestro seleccionado! " + str(ex))
+        return render_template('delete_maestro.html', form = maestro_form)
     
     if request.method == 'POST':
         id = maestro_form.id.data
